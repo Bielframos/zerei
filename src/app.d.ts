@@ -1,18 +1,16 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { Models } from "node-appwrite";
+import type { Models } from "node-appwrite"
 
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
-		interface Locals {
-			user: Models.User<Models.Preferences> | undefined;
-		}
+		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
 	}
 }
 
-export {};
+export {}

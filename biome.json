@@ -9,6 +9,9 @@
         "rules": {
             "suspicious": {
                 "noImplicitAnyLet": "off"
+            },
+            "style": {
+                "useConst": "off"
             }
         }
     }
