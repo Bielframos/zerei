@@ -7,10 +7,10 @@ export async function load({ depends }) {
 
 	const { databases } = createAdminClient()
 
-	const games = await databases.listDocuments<Game>(
+	const games = await databases.listDocuments<SummaryGame>(
 		ZEREI_DATABASE_ID,
 		GAMES_TABLE_ID,
-		[Query.select(["name", "coverImage", "releaseDate"])],
+		[Query.select(["$id", "name", "coverImage", "releaseDate"])],
 	)
 
 	return { games }
