@@ -48,3 +48,13 @@ export async function createGame(game: GameFromAppwrite) {
 		console.log(err)
 	}
 }
+
+export async function deleteGame(id: string) {
+	const { databases } = appwrite
+	try {
+		await databases.deleteDocument(ZEREI_DATABASE_ID, GAMES_TABLE_ID, id)
+		invalidate("data:games")
+	} catch (err) {
+		console.log(err)
+	}
+}
