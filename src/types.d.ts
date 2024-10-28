@@ -5,12 +5,19 @@ declare global {
 		name: string
 		description: string
 		releaseDate: Date
-		coverImage: URL
+		coverImage: string
 		avarageRating: number
 		ratingCount: number
 		genres: Models.DocumentList<Genre>
 		developer: Company
 		publisher: Company
+	}
+
+	declare interface SummaryGame extends Models.Document {
+		$id: string
+		name: string
+		coverImage: string
+		releaseDate: Date
 	}
 
 	declare interface Genre extends Models.Document {
