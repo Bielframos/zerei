@@ -1,5 +1,4 @@
-import { createAdminClient } from "$lib/appwrite/server"
-import { GAMES_TABLE_ID, ZEREI_DATABASE_ID } from "$lib/appwrite/variables"
+import { createAdminClient } from "$lib/utils/appwrite/server"
 import { Query } from "appwrite"
 
 export async function load({ depends }) {
@@ -7,9 +6,9 @@ export async function load({ depends }) {
 
 	const { databases } = createAdminClient()
 
-	const games = await databases.listDocuments<SummaryGame>(
-		ZEREI_DATABASE_ID,
-		GAMES_TABLE_ID,
+	const games = await databases.listDocuments<SummaryGameAW>(
+		"ZEREI-DB",
+		"GAMES",
 		[Query.select(["$id", "name", "coverImage", "releaseDate"])],
 	)
 

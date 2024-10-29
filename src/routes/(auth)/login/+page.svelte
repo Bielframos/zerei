@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation"
-  import { appwrite } from "$lib/appwrite/client"
+  import { AuthService } from "$lib/services/auth.service"
   import type { AppwriteException } from "appwrite"
 
   let formError: null | string = null
@@ -23,7 +23,7 @@
     }
 
     try {
-      await appwrite.account.createEmailPasswordSession(email, password)
+      await AuthService.login(email, password)
       await invalidateAll()
     } catch (e) {
       const error = e as AppwriteException

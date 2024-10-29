@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import defaultTheme from "tailwindcss/defaultTheme"
 
 export default {
 	content: [
@@ -7,6 +8,68 @@ export default {
 	],
 	theme: {
 		extend: {},
+		colors: {
+			white: "#fff",
+			black: "#000",
+			transparent: "transparent",
+			slate: {
+				1: "#fcfcfd",
+				2: "#f9f9fb",
+				3: "#f0f0f3",
+				4: "#e8e8ec",
+				5: "#e0e1e6",
+				6: "#d9d9e0",
+				7: "#cdced6",
+				8: "#b9bbc6",
+				9: "#8b8d98",
+				10: "#80838d",
+				11: "#60646c",
+				12: "#1c2024",
+			},
+			"slate-dark": {
+				1: "#fcfcfd",
+				2: "#f9f9fb",
+				3: "#f0f0f3",
+				4: "#e8e8ec",
+				5: "#e0e1e6",
+				6: "#d9d9e0",
+				7: "#cdced6",
+				8: "#b9bbc6",
+				9: "#8b8d98",
+				10: "#80838d",
+				11: "#60646c",
+				12: "#1c2024",
+			},
+
+			indigo: {
+				1: "#fdfdfe",
+				2: "#f7f9ff",
+				3: "#edf2fe",
+				4: "#e1e9ff",
+				5: "#d2deff",
+				6: "#c1d0ff",
+				7: "#abbdf9",
+				8: "#8da4ef",
+				9: "#3e63dd",
+				10: "#3358d4",
+				11: "#3a5bc7",
+				12: "#1f2d5c",
+			},
+			"indigo-dark": {
+				1: "#11131f",
+				2: "#141726",
+				3: "#182449",
+				4: "#1d2e62",
+				5: "#253974",
+				6: "#304384",
+				7: "#3a4f97",
+				8: "#435db1",
+				9: "#3e63dd",
+				10: "#5472e4",
+				11: "#9eb1ff",
+				12: "#d6e1ff",
+			},
+		},
 	},
 	plugins: [],
 } satisfies Config

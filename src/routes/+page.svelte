@@ -1,43 +1,41 @@
 <script lang="ts">
-  import { invalidateAll } from "$app/navigation"
-  import { appwrite } from "$lib/appwrite/client/index.js"
-  import { findGame, getUniqueGame } from "$lib/appwrite/utils/gameApi.js"
-  import { createGame, deleteGame } from "$lib/appwrite/utils/games.js"
-  import { imageUrlBuilder } from "$lib/igdb.js"
+  // const { data } = $props()
+  // const gamesList = $derived(data.games)
+  // let query = $state("")
+  // let searchedGames: CustomGameFromAppwrite[] = $state([])
+  // let loggedIn = $state(!!data.account)
 
-  const { data } = $props()
-  const gamesList = $derived(data.games)
-  let query = $state("")
-  let searchedGames: CustomGameFromAppwrite[] = $state([])
-  let loggedIn = $state(!!data.account)
+  // async function handleSearch() {
+  //   try {
+  //     const games = await findGame(query)
+  //     searchedGames = [...games]
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
-  async function handleSearch() {
-    try {
-      const games = await findGame(query)
-      searchedGames = [...games]
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  // async function handleAddGame(id: number) {
+  //   try {
+  //     const game = await getUniqueGame(id)
+  //     if (game) {
+  //       createGame(game)
+  //     }
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
-  async function handleAddGame(id: number) {
-    try {
-      const game = await getUniqueGame(id)
-      if (game) {
-        createGame(game)
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  async function logout() {
-    await appwrite.account.deleteSession("current")
-    await invalidateAll()
-  }
+  // async function logout() {
+  //   await appwrite.account.deleteSession("current")
+  //   await invalidateAll()
+  // }
 </script>
 
-{#if loggedIn}
+<header class="pt-10 pb-4 px-6">
+  <h1 class="text-3xl">Zerei</h1>
+</header>
+
+<!-- {#if loggedIn}
   <p>Hello {data.account?.name}!</p>
   <button onclick={logout}>Logout</button>
 {:else}
@@ -94,4 +92,4 @@
   <p>{gamesList.total} {gamesList.total > 1 ? "games" : "game"}</p>
 {:else}
   <p>Ainda não existem jogos registrados</p>
-{/if}
+{/if} -->

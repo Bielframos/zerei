@@ -1,7 +1,7 @@
 import type { Models } from "node-appwrite"
 
 declare global {
-	declare interface Game extends Models.Document {
+	declare interface GameAW extends Models.Document {
 		name: string
 		description: string
 		releaseDate: Date
@@ -13,35 +13,34 @@ declare global {
 		publisher: Company
 	}
 
-	declare interface SummaryGame extends Models.Document {
-		$id: string
+	declare interface SummaryGameAW extends Models.Document {
 		name: string
 		coverImage: string
 		releaseDate: Date
 	}
 
-	declare interface Genre extends Models.Document {
+	declare interface GenreAW extends Models.Document {
 		externalReference: string
 		name: string
 		slug: string
 		games?: Models.DocumentList<Game>
 	}
 
-	declare interface Company extends Models.Document {
+	declare interface CompanyAW extends Models.Document {
 		name: string
 		slug: string
 		developed?: Models.DocumentList<Game>
 		published?: Models.DocumentList<Game>
 	}
 
-	declare interface Platform extends Models.Document {
+	declare interface PlatformAW extends Models.Document {
 		name: string
 		abbreviation: string
 		slug: string
 		games?: Models.DocumentList<Game>
 	}
 
-	declare type GameFromAppwrite = {
+	declare type GameFromGamesApi = {
 		id: number
 		name: string
 		summary: string
@@ -57,7 +56,7 @@ declare global {
 		first_release_date: EpochTimeStamp
 	}
 
-	declare type CustomGameFromAppwrite = Pick<
+	declare type CustomGameFromGamesApi = Pick<
 		GameFromAppwrite,
 		"id" | "name" | "cover" | "first_release_date"
 	>

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: 'Readex Pro Variable', sans-serif;
+  }
+
+html, body {
+    @apply bg-gradient-to-b from-indigo-dark-1 to-indigo-dark-3 text-white h-full w-full;
+}
