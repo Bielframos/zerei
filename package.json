@@ -8,14 +8,19 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "vitest"
+		"test": "vitest",
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@melt-ui/pp": "^0.3.2",
+		"@melt-ui/svelte": "^0.85.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"autoprefixer": "^10.4.20",
 		"postcss": "^8.4.47",
+		"prettier": "^3.3.3",
+		"prettier-plugin-svelte": "^3.2.7",
 		"svelte": "^5",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^3.4.14",
@@ -27,7 +32,9 @@
 	"dependencies": {
 		"@fontsource-variable/readex-pro": "^5.1.0",
 		"appwrite": "^16.0.2",
+		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"lucide-svelte": "^0.454.0",
 		"node-appwrite": "^14.1.0",
 		"tailwind-merge": "^2.5.4"
 	}
