@@ -1,9 +1,14 @@
 <script lang="ts">
-  // const { data } = $props()
+  import Button from '$lib/components/ui/Button.svelte'
+  import { Ellipsis, Plus } from 'lucide-svelte'
+  import Menu from './Menu.svelte'
+
+  const { data } = $props()
+  let account = $derived(data.account)
+
   // const gamesList = $derived(data.games)
   // let query = $state("")
   // let searchedGames: CustomGameFromAppwrite[] = $state([])
-  // let loggedIn = $state(!!data.account)
 
   // async function handleSearch() {
   //   try {
@@ -31,9 +36,17 @@
   // }
 </script>
 
-<header class="pt-10 pb-4 px-6">
+<header class="pt-10 pb-4 px-6 flex justify-between">
   <h1 class="text-3xl">Zerei</h1>
+
+  <Menu {account} />
 </header>
+
+<div
+  class="absolute bottom-0 w-full pb-6 pt-8 flex justify-center bg-gradient-to-b from-transparent to-indigo-dark-1 backdrop-blur-lg"
+>
+  <Button ariaLabel="Botão de busca" size="fab"><Plus /></Button>
+</div>
 
 <!-- {#if loggedIn}
   <p>Hello {data.account?.name}!</p>
