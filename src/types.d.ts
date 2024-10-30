@@ -2,7 +2,7 @@ import type { Models } from 'node-appwrite'
 
 declare global {
   declare type Account = Models.User<Models.Preferences> | null
-  
+
   declare interface GameZerei extends Models.Document {
     name: string
     description: string
@@ -41,6 +41,12 @@ declare global {
   declare interface RecordZerei extends Models.Document {
     type: 'zerado' | 'backlog'
     game: GameZerei
+  }
+
+  declare interface Dashboard extends Models.Document {
+    userId: string
+    completedGamesCount: number
+    backlogGamesCount: number
   }
 
   declare type GameFromIGDB = {
