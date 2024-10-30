@@ -55,7 +55,7 @@ export const gamesService = {
   },
   getRecentlyAdded: async () => {
     return appwrite.databases.listDocuments<GameZerei>('ZEREI-DB', 'GAMES', [
-      Query.orderDesc('$createdAt'),
+      Query.orderDesc('$createdAt'), Query.limit(12)
     ])
   },
   findGames: async (query: string) => {

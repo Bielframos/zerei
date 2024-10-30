@@ -61,7 +61,7 @@
 <ZereiUserSheet {recentlyAdded} />
 
 <div
-  class="absolute bottom-0 w-full pb-6 pt-8 flex justify-center bg-gradient-to-b from-transparent to-indigo-dark-1 backdrop-blur-lg"
+  class="fixed bottom-0 w-full py-6 flex gap-4 justify-center bg-gradient-to-b from-transparent to-indigo-dark- backdrop-blur-lg border-t border-indigo-dark-6"
 >
   <Button
     ariaLabel="Botão de busca"
