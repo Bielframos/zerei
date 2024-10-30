@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation'
   import { Button } from '$lib/components/ui'
-  import { AuthService } from '$lib/services/auth.service'
+  import { authController } from '$lib/controllers/auth.controller'
   import type { AppwriteException } from 'appwrite'
 
   let formError: null | string = null
@@ -12,17 +11,12 @@
 
     const form = event.target as HTMLFormElement
     const formData = new FormData(form)
+    const name = formData.get('name') as string
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    if (!email || !password) {
-      formError = 'Preencha todos os campos'
-      return
-    }
-
     try {
-      await AuthService.login(email, password)
-      await invalidateAll()
+      await authController.register(name, email, password)
     } catch (e) {
       const error = e as AppwriteException
       formError = error.message
@@ -33,17 +27,26 @@
 <form on:submit={handleSubmit} class="grid p-6 gap-4">
   <input
     type="text"
+    name="name"
+    placeholder="John Doe"
+    class="px-4 py-2 rounded-md bg-transparent border border-slate-dark-6"
+    required
+  />
+  <input
+    type="text"
     name="email"
     placeholder="user@zerei.com"
     class="px-4 py-2 rounded-md bg-transparent border border-slate-dark-6"
+    required
   />
   <input
     type="password"
     name="password"
     placeholder="⁎⁎⁎⁎⁎⁎⁎⁎"
     class="px-4 py-2 rounded-md bg-transparent border border-slate-dark-6"
+    required
   />
-  <Button ariaLabel="Acessar o Zerei" type="submit">Entrar</Button>
+  <Button ariaLabel="Acessar o Zerei" type="submit">Criar conta</Button>
 
   {#if formError}
     <p>{formError}</p>
