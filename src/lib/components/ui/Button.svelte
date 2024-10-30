@@ -4,12 +4,16 @@
 
   type StyleProps = VariantProps<typeof buttonStyle>
   export const buttonStyle = cva(
-    'h-8 inline-flex w-fit gap-2 items-center justify-center outline-none focus-visible:ring-2 ring-indigo-dark-6 rounded-full disabled:opacity-50 disabled:bg-slate-dark-9 disabled:text-slate-dark-11 disabled:pointer-events-none transition-all',
+    'h-8 inline-flex w-fit gap-2 items-center justify-center outline-none focus-visible:ring-2 ring-indigo-dark-6 rounded-full disabled:pointer-events-none transition-all',
     {
       variants: {
         variant: {
           default: 'bg-indigo-dark-9 text-white hover:bg-indigo-dark-8',
-          secondary: 'bg-slate-dark-4 text-slate-dark-12 hover:bg-slate-dark-5',
+          secondary: 'bg-slate-dark-4 text-white hover:bg-slate-dark-5',
+          'fab-zerei':
+            'bg-transparent border-2 border-indigo-dark-9 text-white data-[registered=true]:border-none data-[registered=true]:bg-indigo-dark-9 data-[registered=true]:hover:bg-indigo-dark-10',
+          'fab-backlog':
+            'bg-transparent border-2 border-grass-dark-9 text-white data-[registered=true]:border-none data-[registered=true]:bg-grass-dark-9 data-[registered=true]:hover:bg-grass-dark-10',
         },
         size: {
           small: 'text-sm px-4 py-2',
