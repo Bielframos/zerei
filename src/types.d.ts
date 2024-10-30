@@ -10,9 +10,10 @@ declare global {
     coverImage: string
     avarageRating: number
     ratingCount: number
-    genres: Models.DocumentList<Genre>
+    genres: genre[]
     developer: Company
     publisher: Company
+    platforms: Platform[]
     records: Omit<Record, 'game'>[]
   }
 
