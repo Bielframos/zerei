@@ -21,7 +21,7 @@ export const IGDBServices = {
       '',
       false,
       '/most-popular',
-      ExecutionMethod.POST
+      ExecutionMethod.GET
     )
 
     return JSON.parse(result.responseBody) as SummaryGameFromIGDB[]
