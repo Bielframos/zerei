@@ -78,7 +78,5 @@
       alt={`Capa do jogo: ${game.name}`}
       class="rounded-md"
     />
-    <h6 class="text-center mt-2 text-sm">{game.name}</h6>
-    <span class="text-xs text-slate-dark-11">{game.launchYear}</span>
   </a>
 {/if}

@@ -67,7 +67,9 @@
 
     {#if query}
       <h2 class="px-6 text-lg font-normal mb-4">Resultados para "{query}"</h2>
-      <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
+      <div
+        class="flex-1 grid grid-cols-3 gap-2 auto-rows-min px-6 overflow-y-auto pb-10"
+      >
         {#if loading}
           <p class="col-span-2 text-slate-dark-11">Buscando ...</p>
         {:else}
@@ -80,7 +82,9 @@
         {/if}
       </div>
     {:else if recentlyAdded}
-      <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
+      <div
+        class="flex-1 grid grid-cols-3 gap-2 auto-rows-min px-6 overflow-y-auto pb-10"
+      >
         {#each recentlyAdded.documents as zereiGame}
           {@const game = new ZereiSummaryGame(zereiGame)}
           <GameCard {game} />
