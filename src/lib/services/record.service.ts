@@ -13,6 +13,17 @@ export const recordService = {
       ]
     )
   },
+  getUnique: async (gameId: string) => {
+    return appwrite.databases.listDocuments<RecordZerei>(
+      'ZEREI-DB',
+      'RECORDS',
+      [
+        Query.equal('game', gameId),
+        Query.limit(10),
+        Query.orderDesc('$createdAt'),
+      ]
+    )
+  },
   register: async (
     gameId: string,
     userId: string,
@@ -28,6 +39,16 @@ export const recordService = {
         Permission.update(Role.user(userId)),
         Permission.delete(Role.user(userId)),
       ]
+    )
+  },
+  update: async (recordId: string, type: 'zerado' | 'backlog') => {
+    return appwrite.databases.updateDocument<RecordZerei>(
+      'ZEREI-DB',
+      'RECORDS',
+      recordId,
+      {
+        type,
+      }
     )
   },
 }

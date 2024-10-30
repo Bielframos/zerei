@@ -1,9 +1,22 @@
 import { invalidateAll } from '$app/navigation'
-import { AuthService } from '$lib/services/auth.service'
+import { authService } from '$lib/services/auth.service'
+import { dashboardService } from '$lib/services/dashboard.service'
 
 export const authController = {
   logout: async () => {
-    await AuthService.logout()
+    await authService.logout()
     invalidateAll()
+  },
+  register: async (name: string, email: string, password: string) => {
+    try {
+      const user = await authService.register(name, email, password)
+      await authService.login(email, password)
+      await dashboardService.create(user.$id)
+      await invalidateAll()
+      return user
+    } catch (error) {
+      console.error('Error registering:', error)
+      throw error
+    }
   },
 }
