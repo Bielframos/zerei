@@ -8,15 +8,16 @@
     {
       variants: {
         variant: {
-          default: 'bg-indigo-dark-9 text-indigo-dark-12 hover:indigo-dark-8',
-          secondary: 'bg-indigo-dark-3 text-indigo-dark-12 hover:indigo-dark-4',
+          default:
+            'bg-indigo-dark-9 text-indigo-dark-12 hover:bg-indigo-dark-8',
+          secondary: 'bg-slate-dark-4 text-slate-dark-12 hover:bg-slate-dark-5',
         },
         size: {
           small: 'text-sm px-4 py-2',
           medium: 'text-md px-4 py-2',
           large: 'text-lg px-4 py-2',
-          icon: 'h-8 w-8',
-          fab: 'h-14 w-14',
+          icon: 'h-8 w-8 min-h-8 min-w-8',
+          fab: 'h-14 w-14 min-h-14 min-w-14',
         },
         iconPos: {
           before: 'pl-3 pr-4',
