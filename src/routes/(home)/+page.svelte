@@ -61,11 +61,12 @@
 <ZereiUserSheet {recentlyAdded} />
 
 <div
-  class="fixed bottom-0 w-full py-6 flex gap-4 justify-center bg-gradient-to-b from-transparent to-indigo-dark- backdrop-blur-lg border-t border-indigo-dark-6"
+  class="fixed bottom-0 w-full py-6 flex gap-4 justify-center bg-gradient-to-b from-transparent to-indigo-dark-4 backdrop-blur-lg border-t border-indigo-dark-6"
 >
   <Button
     ariaLabel="Botão de busca"
     size="fab"
-    onclick={() => zereiUserSheetTrigger()}><Search /></Button
-  >
+    onclick={() => zereiUserSheetTrigger()}
+    ><Search />
+  </Button>
 </div>
