@@ -17,13 +17,11 @@
   import { X } from 'lucide-svelte'
   import { fade, slide } from 'svelte/transition'
 
-  const { games }: { games: Models.DocumentList<SummaryGameFromZerei> } =
-    $props()
-
   let scrim = $state<HTMLDivElement | undefined>()
   let query = $state('')
   let loading = $state(false)
-  let searchedGames = $state<SummaryGameFromZerei[]>([])
+  let searchedGames = $state<GameZerei[]>([])
+  const games = GameController.getRecentlyAdded()
 
   async function handleSearch() {
     loading = true
@@ -93,13 +91,16 @@
         {/each}
       </div>
     {:else}
-      <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
-        {#each games.documents as zereiGame}
-          {@const game = new ZereiSummaryGame(zereiGame)}
-
-          <GameCard {game} />
-        {/each}
-      </div>
+      {#await games}
+        <p>Carregando games</p>
+      {:then data}
+        <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
+          {#each data.documents as zereiGame}
+            {@const game = new ZereiSummaryGame(zereiGame)}
+            <GameCard {game} />
+          {/each}
+        </div>
+      {/await}
     {/if}
   </div>
 {/if}

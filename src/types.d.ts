@@ -1,7 +1,7 @@
 import type { Models } from 'node-appwrite'
 
 declare global {
-  declare interface GameAW extends Models.Document {
+  declare interface GameZerei extends Models.Document {
     name: string
     description: string
     releaseDate: string
@@ -11,33 +11,35 @@ declare global {
     genres: Models.DocumentList<Genre>
     developer: Company
     publisher: Company
+    records: Omit<Record, 'game'>[]
   }
 
-  declare interface SummaryGameFromZerei extends Models.Document {
-    name: string
-    coverImage: string
-    releaseDate: string
-  }
-
-  declare interface GenreAW extends Models.Document {
+  declare interface Genre extends Models.Document {
     externalReference: string
     name: string
     slug: string
     games?: Models.DocumentList<Game>
   }
 
-  declare interface CompanyAW extends Models.Document {
+  declare interface Company extends Models.Document {
     name: string
     slug: string
     developed?: Models.DocumentList<Game>
     published?: Models.DocumentList<Game>
   }
 
-  declare interface PlatformAW extends Models.Document {
+  declare interface Platform extends Models.Document {
     name: string
     abbreviation: string
     slug: string
     games?: Models.DocumentList<Game>
+  }
+
+  declare interface RecordZerei extends Models.Document {
+    type: 'zerado' | 'backlog'
+    game: GameZerei
+    platforms?: Models.DocumentList<Platform>
+    finishedAt?: string
   }
 
   declare type GameFromIGDB = {
@@ -59,6 +61,6 @@ declare global {
 
   declare type SummaryGameFromIGDB = Pick<
     GameFromIGDB,
-    'id' | 'name' | 'cover' | 'first_release_date'
+    'id' | 'name' | 'slug' | 'cover' | 'first_release_date'
   >
 }

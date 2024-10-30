@@ -13,32 +13,37 @@ export const gamesService = {
       ? imageUrlBuilder(game.cover.image_id, 'cover_big')
       : null
 
-    return databases.createDocument<GameAW>('ZEREI-DB', 'GAMES', ID.unique(), {
-      name: game.name,
-      slug: game.slug,
-      description: game.summary,
-      coverImage,
-      releaseDate: new Date(game.first_release_date * 1000).toISOString(),
-      averageRating: 0,
-      ratingCount: 0,
-      genres: game.genres.map(genre => genre.appwriteGenreId),
-      platforms: game.platforms.map(platform => ({
-        $id: platform.id,
-        name: platform.name,
-        slug: platform.slug,
-      })),
-      developer: {
-        $id: developer?.company.id,
-        name: developer?.company.name,
-        slug: developer?.company.slug,
-      },
-      publisher: {
-        $id: publisher?.company.id,
-        name: publisher?.company.name,
-        slug: publisher?.company.slug,
-      },
-      externalReference: String(game.id),
-    })
+    return databases.createDocument<GameZerei>(
+      'ZEREI-DB',
+      'GAMES',
+      ID.unique(),
+      {
+        name: game.name,
+        slug: game.slug,
+        description: game.summary,
+        coverImage,
+        releaseDate: new Date(game.first_release_date * 1000).toISOString(),
+        averageRating: 0,
+        ratingCount: 0,
+        genres: game.genres.map(genre => genre.appwriteGenreId),
+        platforms: game.platforms.map(platform => ({
+          $id: platform.id,
+          name: platform.name,
+          slug: platform.slug,
+        })),
+        developer: {
+          $id: developer?.company.id,
+          name: developer?.company.name,
+          slug: developer?.company.slug,
+        },
+        publisher: {
+          $id: publisher?.company.id,
+          name: publisher?.company.name,
+          slug: publisher?.company.slug,
+        },
+        externalReference: String(game.id),
+      }
+    )
   },
   delete: async (id: string) => {
     return appwrite.databases.deleteDocument('ZEREI-DB', 'GAMES', id)
@@ -48,11 +53,14 @@ export const gamesService = {
       Query.equal(by === 'id' ? '$id' : 'externalReference', [query]),
     ])
   },
+  getRecentlyAdded: async () => {
+    return appwrite.databases.listDocuments<GameZerei>('ZEREI-DB', 'GAMES', [
+      Query.orderDesc('$createdAt'),
+    ])
+  },
   findGames: async (query: string) => {
-    return appwrite.databases.listDocuments<SummaryGameFromZerei>(
-      'ZEREI-DB',
-      'GAMES',
-      [Query.search('name', query)]
-    )
+    return appwrite.databases.listDocuments<GameZerei>('ZEREI-DB', 'GAMES', [
+      Query.search('name', query),
+    ])
   },
 }

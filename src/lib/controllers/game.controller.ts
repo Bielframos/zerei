@@ -34,6 +34,15 @@ export const GameController = {
       throw error
     }
   },
+  getRecentlyAdded: async () => {
+    try {
+      const games = await gamesService.getRecentlyAdded()
+      return games
+    } catch (error) {
+      console.error('Error searching for game:', error)
+      throw error
+    }
+  },
   findGames: async (query: string) => {
     try {
       const games = await gamesService.findGames(query)

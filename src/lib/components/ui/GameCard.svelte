@@ -54,21 +54,31 @@
   }
 </script>
 
-<article class="relative flex flex-col items-center">
-  <img
-    src={game.coverImageUrl}
-    alt={`Capa do jogo: ${game.name}`}
-    class="rounded-md"
-  />
-  <h6 class="text-center mt-2 text-sm">{game.name}</h6>
-  <span class="text-xs text-slate-dark-11">{game.launchYear}</span>
+{#if zerei}
+  <article class="relative flex flex-col items-center">
+    <img
+      src={game.coverImageUrl}
+      alt={`Capa do jogo: ${game.name}`}
+      class="rounded-md"
+    />
+    <h6 class="text-center mt-2 text-sm">{game.name}</h6>
+    <span class="text-xs text-slate-dark-11">{game.launchYear}</span>
 
-  {#if zerei}
     <Button
       ariaLabel="Adicionar jogo no Zerei"
       size="icon"
       className="absolute top-2 right-2"
       onclick={() => addToZerei(game)}><Plus /></Button
     >
-  {/if}
-</article>
+  </article>
+{:else}
+  <a href={`/game/${game.slug}`} class="relative flex flex-col items-center">
+    <img
+      src={game.coverImageUrl}
+      alt={`Capa do jogo: ${game.name}`}
+      class="rounded-md"
+    />
+    <h6 class="text-center mt-2 text-sm">{game.name}</h6>
+    <span class="text-xs text-slate-dark-11">{game.launchYear}</span>
+  </a>
+{/if}

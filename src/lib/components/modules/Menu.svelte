@@ -6,7 +6,7 @@
   import type { Models } from 'appwrite'
   import { Ellipsis, Gamepad2, LogOut } from 'lucide-svelte'
   import { fly } from 'svelte/transition'
-  import { zereiTeamSheetTrigger } from './ZereiTeamSheet.svelte'
+  import { zereiTeamSheetTrigger } from '../../../routes/(home)/ZereiTeamSheet.svelte'
 
   const { account }: { account: Models.User<Models.Preferences> | null } =
     $props()
