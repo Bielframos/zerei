@@ -10,21 +10,17 @@
 </script>
 
 <script lang="ts">
-  import { Button, GameCard, Input } from '$lib/components/ui'
+  import { Button, GameCard, Input, Overlay } from '$lib/components/ui'
   import { IGDBController } from '$lib/controllers/igdb.controller'
   import { IGDBSummaryGame } from '$lib/models/summaryGame.model'
   import { X } from 'lucide-svelte'
-  import { getContext } from 'svelte'
+  import { onMount } from 'svelte'
   import { fade, slide } from 'svelte/transition'
 
-  let scrim = $state<HTMLDivElement | undefined>()
   let query = $state('')
   let loading = $state(false)
   let searchedGames = $state<SummaryGameFromIGDB[]>([])
-
-  const mostPolularGames = getContext(
-    'mostPopularGames'
-  ) as SummaryGameFromIGDB[]
+  let mostPopularGames = $state<SummaryGameFromIGDB[]>([])
 
   async function handleSearch() {
     loading = true
@@ -45,26 +41,13 @@
     searchedGames = []
   }
 
-  $effect(() => {
-    if (scrim) {
-      scrim.addEventListener('click', () => {
-        zereiTeamSheetTrigger()
-      })
-    }
+  onMount(async () => {
+    mostPopularGames = await IGDBController.getMostPopular()
   })
 </script>
 
 {#if showSheet}
-  <div
-    aria-label="scrim"
-    bind:this={scrim}
-    class="absolute z-40 inset-0 bg-slate-dark-1/50"
-    in:fade={{ duration: 100 }}
-    out:fade={{ duration: 100 }}
-  ></div>
-{/if}
-
-{#if showSheet}
+  <Overlay onclick={() => zereiTeamSheetTrigger()} />
   <div
     aria-label="sheet"
     class="flex flex-col absolute z-50 h-[calc(100dvh-92px)] w-full bottom-0 bg-gradient-to-b from-slate-dark-3/80 to-slate-dark-4/80 backdrop-blur-lg rounded-t-2xl shadow-lg shadow-slate-dark-1 overflow-hidden"
@@ -72,7 +55,7 @@
     out:slide={{ axis: 'y' }}
   >
     <header class="flex p-6 gap-1">
-      {#if searchedGames.length > 0}
+      {#if query}
         <Button
           ariaLabel="Limpar busca"
           variant="secondary"
@@ -84,18 +67,23 @@
       <Button ariaLabel="Buscar" onclick={() => handleSearch()}>Buscar</Button>
     </header>
 
-    {#if searchedGames.length > 0}
+    {#if query}
       <h2 class="px-6 text-lg font-normal mb-4">Resultados para "{query}"</h2>
       <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
-        {#each searchedGames as searchedGame}
-          {@const game = new IGDBSummaryGame(searchedGame)}
-
-          <GameCard {game} zerei />
-        {/each}
+        {#if loading}
+          <p class="col-span-2 text-slate-dark-11">Buscando ...</p>
+        {:else}
+          {#each searchedGames as searchedGame}
+            {@const game = new IGDBSummaryGame(searchedGame)}
+            <GameCard {game} zerei />
+          {:else}
+            <p class="col-span-2 text-slate-dark-11">Nenhum jogo encontrado</p>
+          {/each}
+        {/if}
       </div>
     {:else}
       <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
-        {#each mostPolularGames as popularGameFromIGDB}
+        {#each mostPopularGames as popularGameFromIGDB}
           {@const popularGame = new IGDBSummaryGame(popularGameFromIGDB)}
 
           <GameCard game={popularGame} zerei />
