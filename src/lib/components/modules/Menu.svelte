@@ -4,9 +4,9 @@
   import cn from '$lib/utils/cn'
   import { createDropdownMenu, melt } from '@melt-ui/svelte'
   import type { Models } from 'appwrite'
-  import { Ellipsis, Gamepad2, LogOut } from 'lucide-svelte'
+  import { Ellipsis, Plus, LogOut } from 'lucide-svelte'
   import { fly } from 'svelte/transition'
-  import { zereiTeamSheetTrigger } from '../../../routes/(home)/ZereiTeamSheet.svelte'
+  import { zereiTeamSheetTrigger } from './ZereiTeamSheet.svelte'
 
   const { account }: { account: Models.User<Models.Preferences> | null } =
     $props()
@@ -40,7 +40,7 @@
 
 {#if $open}
   <div
-    class="z-40 flex max-h-[300px] min-w-[220px] flex-col shadow-lg rounded-md bg-gradient-to-b from-slate-dark-4 to-slate-dark-5/80 backdrop-blur-lg px-1 py-2 lg:max-h-none text-sm font-[300]"
+    class="z-40 flex max-h-[300px] min-w-[220px] flex-col shadow-lg rounded-md bg-gradient-to-b from-slate-dark-4 to-slate-dark-5/80 backdrop-blur-lg px-1 py-2 lg:max-h-none"
     use:melt={$menu}
     transition:fly={{ duration: 150, y: -10 }}
   >
@@ -49,11 +49,8 @@
       use:melt={$item}
       onclick={() => authController.logout()}
     >
+      <LogOut size={20} />
       Sair do Zerei
-      <LogOut
-        class="absolute left-0 inline-flex w-6 items-center justify-center"
-        size={14}
-      />
     </button>
 
     {#if account && account.labels.includes('zerei')}
@@ -64,11 +61,8 @@
         use:melt={$item}
         onclick={() => zereiTeamSheetTrigger()}
       >
+        <Plus size={20} />
         Novo jogo
-        <Gamepad2
-          class="absolute left-0 inline-flex w-6 items-center justify-center"
-          size={14}
-        />
       </button>
     {/if}
 
@@ -92,11 +86,11 @@
 
 <style lang="postcss">
   .item {
-    @apply relative h-6 min-h-[24px] select-none rounded-sm pl-6 pr-3;
+    @apply relative h-7 min-h-[24px] select-none rounded-sm pl-2 pr-2;
     @apply z-40 text-slate-dark-11 outline-none;
     @apply data-[highlighted]:bg-slate-dark-4 data-[highlighted]:text-slate-dark-12;
     @apply data-[disabled]:text-slate-dark-10;
-    @apply flex items-center text-sm leading-none;
+    @apply flex items-center leading-none font-[300] gap-2;
     @apply ring-0 !important;
   }
 
@@ -110,7 +104,7 @@
   }
 
   .separator {
-    @apply m-[5px] h-[1px] bg-slate-dark-6;
+    @apply m-[5px] h-[4px] bg-slate-dark-6 rounded-full;
   }
 
   .rightSlot {

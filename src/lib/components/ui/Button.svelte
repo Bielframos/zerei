@@ -8,8 +8,7 @@
     {
       variants: {
         variant: {
-          default:
-            'bg-indigo-dark-9 text-indigo-dark-12 hover:bg-indigo-dark-8',
+          default: 'bg-indigo-dark-9 text-white hover:bg-indigo-dark-8',
           secondary: 'bg-slate-dark-4 text-slate-dark-12 hover:bg-slate-dark-5',
         },
         size: {
