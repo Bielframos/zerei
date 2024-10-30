@@ -6,6 +6,7 @@
   import type { Models } from 'appwrite'
   import { Ellipsis, Gamepad2, LogOut } from 'lucide-svelte'
   import { fly } from 'svelte/transition'
+  import { zereiTeamSheetTrigger } from './ZereiTeamSheet.svelte'
 
   const { account }: { account: Models.User<Models.Preferences> | null } =
     $props()
@@ -39,7 +40,7 @@
 
 {#if $open}
   <div
-    class="z-40 flex max-h-[300px] min-w-[220px] flex-col shadow-lg rounded-md bg-gradient-to-b from-slate-dark-3/50 to-slate-dark-4/50 backdrop-blur-lg px-1 py-2 lg:max-h-none text-sm font-[300]"
+    class="z-40 flex max-h-[300px] min-w-[220px] flex-col shadow-lg rounded-md bg-gradient-to-b from-slate-dark-4 to-slate-dark-5/80 backdrop-blur-lg px-1 py-2 lg:max-h-none text-sm font-[300]"
     use:melt={$menu}
     transition:fly={{ duration: 150, y: -10 }}
   >
@@ -58,7 +59,11 @@
     {#if account && account.labels.includes('zerei')}
       <div class="separator" use:melt={$separator}></div>
 
-      <button class="item" use:melt={$item}>
+      <button
+        class="item"
+        use:melt={$item}
+        onclick={() => zereiTeamSheetTrigger()}
+      >
         Novo jogo
         <Gamepad2
           class="absolute left-0 inline-flex w-6 items-center justify-center"
