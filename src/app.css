@@ -7,5 +7,5 @@ body {
   }
 
 html, body {
-    @apply bg-gradient-to-b from-indigo-dark-1 to-indigo-dark-3 text-white font-[300] h-full w-full;
+    @apply bg-gradient-to-b from-indigo-dark-1 to-indigo-dark-3 text-white font-[300] h-fit min-h-[100dvh];
 }
