@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation'
-  import Button from '$lib/components/ui/Button.svelte'
+  import { Button } from '$lib/components/ui'
   import { AuthService } from '$lib/services/auth.service'
   import type { AppwriteException } from 'appwrite'
 
