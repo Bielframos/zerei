@@ -5,7 +5,7 @@
   import { Gamepad2, Library } from 'lucide-svelte'
 
   const { data } = $props()
-  let account = $derived(data.account)
+  const account = $derived(data.account)
   const game = new GameModel(data.game)
 </script>
 
@@ -36,7 +36,7 @@
     <Button
       ariaLabel="Botão de registro de jogo zerado"
       size="fab"
-      className="bg-grass-dark-9 hover:bg-grass-dark-8 text-grass-dark-12"
+      className="bg-grass-dark-9 hover:bg-grass-dark-8 text-white"
       onclick={() =>
         recordController.registerRecord(game.id, account.$id, 'zerado')}
       ><Library /></Button

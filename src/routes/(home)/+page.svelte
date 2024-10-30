@@ -1,20 +1,21 @@
 <script lang="ts">
+  import Header from '$lib/components/modules/Header.svelte'
   import { Button } from '$lib/components/ui'
-  import { Search, ArrowDown } from 'lucide-svelte'
-  import { setContext } from 'svelte'
-  import ZereiTeamSheet from './ZereiTeamSheet.svelte'
+  import GameCard from '$lib/components/ui/GameCard.svelte'
+  import { recordController } from '$lib/controllers/record.controller'
+  import { ZereiSummaryGame } from '$lib/models/summaryGame.model'
+  import { ArrowDown, Search } from 'lucide-svelte'
   import ZereiUserSheet, {
     zereiUserSheetTrigger,
   } from './ZereiUserSheet.svelte'
-  import { recordController } from '$lib/controllers/record.controller'
-  import { ZereiSummaryGame } from '$lib/models/summaryGame.model'
-  import GameCard from '$lib/components/ui/GameCard.svelte'
 
   const { data } = $props()
+  const account = $derived(data.account)
+  const recentlyAdded = $derived(data.recentlyAdded)
   const records = recordController.getRecords()
-
-  setContext('mostPopularGames', data.mostPolularGames)
 </script>
+
+<Header {account} />
 
 {#await records}
   <p>Buscando seus registros</p>
@@ -57,8 +58,7 @@
   {/if}
 {/await}
 
-<ZereiTeamSheet />
-<ZereiUserSheet />
+<ZereiUserSheet {recentlyAdded} />
 
 <div
   class="absolute bottom-0 w-full pb-6 pt-8 flex justify-center bg-gradient-to-b from-transparent to-indigo-dark-1 backdrop-blur-lg"
