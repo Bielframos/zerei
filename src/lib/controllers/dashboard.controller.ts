@@ -17,7 +17,7 @@ export const dashboardController = {
   ) => {
     try {
       await dashboardService.update(userId, data)
-      invalidate('data:dashboard')
+      invalidate('data:zerei')
     } catch (error) {
       console.error('Error getting dashboard:', error)
       throw error

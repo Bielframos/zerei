@@ -4,7 +4,7 @@
   import Menu from './Menu.svelte'
   import cn from '$lib/utils/cn'
   import { buttonStyle } from '../ui/Button.svelte'
-  import { zereiUserSheetTrigger } from '../../../routes/(home)/ZereiUserSheet.svelte'
+  import { zereiUserSheetTrigger } from './ZereiUserSheet.svelte'
 
   let {
     account,

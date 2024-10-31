@@ -5,7 +5,7 @@ export const GameController = {
   createGame: async (game: GameFromIGDB) => {
     try {
       const createdGame = await gamesService.create(game)
-      invalidate('data:recentlyAdded')
+      invalidate('data:zerei')
       return createdGame
     } catch (error) {
       console.error('Error creating game:', error)
