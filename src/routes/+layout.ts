@@ -1,7 +1,8 @@
 import { dashboardController } from '$lib/controllers/dashboard.controller'
 import { appwrite } from '$lib/utils/appwrite/client'
 
-export const load = async () => {
+export const load = async ({ depends }) => {
+  depends('data:dashboard')
   try {
     const account = await appwrite.account.get()
     return {

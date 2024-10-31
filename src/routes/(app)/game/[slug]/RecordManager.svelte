@@ -1,29 +1,37 @@
 <script lang="ts">
+  import Dashboard from '$lib/components/modules/Dashboard.svelte'
   import { Button } from '$lib/components/ui'
+  import { dashboardController } from '$lib/controllers/dashboard.controller'
   import { recordController } from '$lib/controllers/record.controller'
   import { Gamepad2, Library } from 'lucide-svelte'
   import { onMount } from 'svelte'
 
-  const { account, gameId }: { account: Account; gameId: string } = $props()
+  const {
+    account,
+    gameId,
+    dashboard,
+  }: { account: Account; gameId: string; dashboard: Dashboard | null } =
+    $props()
   let record = $state<RecordZerei | undefined>(undefined)
 
   async function handleRegister(userId: string, type: 'zerado' | 'backlog') {
-    if (record) {
-      const updatedRecord = await recordController.updateRecord(
-        record.$id,
-        type
-      )
+    let completedAdjustment = 0
+    let backlogAdjustment = 0
 
-      record = updatedRecord
+    if (record) {
+      record = await recordController.updateRecord(record.$id, type)
+      type === 'zerado' ? backlogAdjustment-- : completedAdjustment--
+    } else {
+      record = await recordController.registerRecord(gameId, userId, type)
+      type === 'zerado' ? completedAdjustment++ : backlogAdjustment++
     }
 
-    const newRecord = await recordController.registerRecord(
-      gameId,
-      userId,
-      type
-    )
-
-    record = newRecord
+    if (dashboard) {
+      await dashboardController.update(userId, {
+        completed: dashboard.completedGamesCount + completedAdjustment,
+        backlog: dashboard.backlogGamesCount + backlogAdjustment,
+      })
+    }
   }
 
   onMount(async () => {

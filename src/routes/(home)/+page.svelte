@@ -1,29 +1,33 @@
 <script lang="ts">
+  import Dashboard from '$lib/components/modules/Dashboard.svelte'
   import Header from '$lib/components/modules/Header.svelte'
   import { Button } from '$lib/components/ui'
   import GameCard from '$lib/components/ui/GameCard.svelte'
   import { recordController } from '$lib/controllers/record.controller'
   import { ZereiSummaryGame } from '$lib/models/summaryGame.model'
-  import { ArrowDown, Search } from 'lucide-svelte'
+  import { Search } from 'lucide-svelte'
   import ZereiUserSheet, {
     zereiUserSheetTrigger,
   } from './ZereiUserSheet.svelte'
+  import Loading from '$lib/components/modules/Loading.svelte'
 
   const { data } = $props()
   const account = $derived(data.account)
   const recentlyAdded = $derived(data.recentlyAdded)
-  const records = recordController.getRecords()
+  const dashboard = $derived(data.dashboard)
+  let filter = $state<RecordType>('zerado')
+  const records = $derived(recordController.getRecords(filter))
 </script>
 
-<Header {account} />
+<Header {account} bind:recordsFilter={filter} />
+
+<Dashboard {dashboard} />
 
 {#await records}
-  <p>Buscando seus registros</p>
+  <Loading />
 {:then data}
   {#if data.total < 1}
-    <div
-      class="h-[calc(100vh-204px)] flex flex-col items-center justify-center"
-    >
+    <div class="py-28 flex flex-col items-center justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -38,18 +42,9 @@
       >
       <h2 class="text-3xl font-normal mt-4">Bem-vindo ao Zerei</h2>
       <p>Registre sua história nos games</p>
-
-      <div
-        class="grid auto-rows-min justify-items-center text-slate-dark-11 gap-2 mt-24"
-      >
-        <p class="text-sm text-center">
-          Busque por um jogo <br /> para começar
-        </p>
-        <ArrowDown size={16} />
-      </div>
     </div>
   {:else}
-    <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
+    <div class="flex-1 grid grid-cols-3 gap-2 px-6 overflow-y-auto pb-10 mt-6">
       {#each data.documents as register}
         {@const game = new ZereiSummaryGame(register.game)}
         <GameCard {game} />

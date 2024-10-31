@@ -4,12 +4,17 @@
   import cn from '$lib/utils/cn'
   import { createDropdownMenu, melt } from '@melt-ui/svelte'
   import type { Models } from 'appwrite'
-  import { Ellipsis, Plus, LogOut } from 'lucide-svelte'
+  import { Ellipsis, Plus, LogOut, ListFilter } from 'lucide-svelte'
   import { fly } from 'svelte/transition'
   import { zereiTeamSheetTrigger } from './ZereiTeamSheet.svelte'
 
-  const { account }: { account: Models.User<Models.Preferences> | null } =
-    $props()
+  let {
+    account,
+    recordsFilter = $bindable(),
+  }: {
+    account: Models.User<Models.Preferences> | null
+    recordsFilter?: RecordType
+  } = $props()
 
   const {
     elements: { trigger, menu, item, separator },
@@ -40,22 +45,39 @@
 
 {#if $open}
   <div
-    class="z-40 flex max-h-[300px] min-w-[220px] flex-col shadow-lg rounded-md bg-gradient-to-b from-slate-dark-4 to-slate-dark-5/80 backdrop-blur-lg px-1 py-2 lg:max-h-none"
+    class="z-40 flex max-h-[300px] min-w-[220px] flex-col shadow-lg rounded-md bg-gradient-to-b from-slate-dark-4 to-slate-dark-5/90 backdrop-blur-lg px-1 py-2 lg:max-h-none"
     use:melt={$menu}
     transition:fly={{ duration: 150, y: -10 }}
   >
-    <button
-      class="item"
-      use:melt={$item}
-      onclick={() => authController.logout()}
-    >
-      <LogOut size={20} />
-      Sair do Zerei
-    </button>
+    {#if recordsFilter}
+      <button
+        class="item"
+        use:melt={$item}
+        onclick={() => (recordsFilter = 'zerado')}
+      >
+        <ListFilter
+          size={20}
+          class={cn(recordsFilter !== 'zerado' && 'opacity-0')}
+        />
+        Zerados
+      </button>
+
+      <button
+        class="item"
+        use:melt={$item}
+        onclick={() => (recordsFilter = 'backlog')}
+      >
+        <ListFilter
+          size={20}
+          class={cn(recordsFilter !== 'backlog' && 'opacity-0')}
+        />
+        Backlog
+      </button>
+
+      <div class="separator" use:melt={$separator}></div>
+    {/if}
 
     {#if account && account.labels.includes('zerei')}
-      <div class="separator" use:melt={$separator}></div>
-
       <button
         class="item"
         use:melt={$item}
@@ -64,7 +86,17 @@
         <Plus size={20} />
         Novo jogo
       </button>
+      <div class="separator" use:melt={$separator}></div>
     {/if}
+
+    <button
+      class="item"
+      use:melt={$item}
+      onclick={() => authController.logout()}
+    >
+      <LogOut size={20} />
+      Sair do Zerei
+    </button>
 
     <!-- 💡 Exemplo de item marcável -->
     <!-- <div class="item" use:melt={$checkboxItem}>

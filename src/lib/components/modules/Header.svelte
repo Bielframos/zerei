@@ -5,7 +5,11 @@
   import cn from '$lib/utils/cn'
   import { buttonStyle } from '../ui/Button.svelte'
 
-  const { account, back }: { account: Account; back?: boolean } = $props()
+  let {
+    account,
+    recordsFilter = $bindable(),
+    back,
+  }: { account: Account; recordsFilter?: RecordType; back?: boolean } = $props()
 
   function backToLastPage() {
     window.history.back()
@@ -26,7 +30,7 @@
   </div>
 
   {#if account}
-    <Menu {account} />
+    <Menu {account} bind:recordsFilter />
   {:else}
     <div class="flex gap-2 items-center">
       <a
