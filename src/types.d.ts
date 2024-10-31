@@ -38,13 +38,14 @@ declare global {
     games?: Models.DocumentList<Game>
   }
 
+  declare type RecordType = 'zerado' | 'backlog'
+
   declare interface RecordZerei extends Models.Document {
-    type: 'zerado' | 'backlog'
+    type: RecordType
     game: GameZerei
   }
 
   declare interface Dashboard extends Models.Document {
-    userId: string
     completedGamesCount: number
     backlogGamesCount: number
   }
