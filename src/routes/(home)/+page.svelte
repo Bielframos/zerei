@@ -44,7 +44,9 @@
       <p>Registre sua história nos games</p>
     </div>
   {:else}
-    <div class="flex-1 grid grid-cols-3 gap-2 px-6 overflow-y-auto pb-10 mt-6">
+    <div
+      class="flex-1 grid grid-cols-3 gap-2 px-6 overflow-y-auto mt-6 pb-[232px]"
+    >
       {#each data.documents as register}
         {@const game = new ZereiSummaryGame(register.game)}
         <GameCard {game} />
