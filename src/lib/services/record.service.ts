@@ -33,7 +33,7 @@ export const recordService = {
       'ZEREI-DB',
       'RECORDS',
       ID.unique(),
-      { userId, game: gameId, type },
+      { game: gameId, type },
       [
         Permission.read(Role.user(userId)),
         Permission.update(Role.user(userId)),
