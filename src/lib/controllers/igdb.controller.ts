@@ -27,5 +27,5 @@ export const IGDBController = {
       console.error('Error geting most popular games:', error)
       throw error
     }
-  }
+  },
 }

@@ -25,7 +25,9 @@ export const gamesService = {
         releaseDate: new Date(game.first_release_date * 1000).toISOString(),
         averageRating: 0,
         ratingCount: 0,
-        genres: game.genres.map(genre => genre.appwriteGenreId),
+        genres: game.genres
+          ? game.genres.map(genre => genre.appwriteGenreId)
+          : null,
         platforms: game.platforms.map(platform => ({
           $id: platform.id,
           name: platform.name,
@@ -55,7 +57,8 @@ export const gamesService = {
   },
   getRecentlyAdded: async () => {
     return appwrite.databases.listDocuments<GameZerei>('ZEREI-DB', 'GAMES', [
-      Query.orderDesc('$createdAt'), Query.limit(12)
+      Query.orderDesc('$createdAt'),
+      Query.limit(12),
     ])
   },
   findGames: async (query: string) => {
