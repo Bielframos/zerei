@@ -1,3 +1,4 @@
+import { browser } from '$app/environment'
 import { addToast } from '$lib/components/ui/Toast.svelte'
 import { recordService } from '$lib/services/record.service'
 
@@ -13,7 +14,22 @@ export const recordController = {
   },
   getRecords: async (type?: 'zerado' | 'backlog') => {
     try {
+      const cacheKey = `records-${type}`
+
+      if (browser) {
+        const cachedData = sessionStorage.getItem(cacheKey)
+        if (cachedData) {
+          return JSON.parse(cachedData)
+        }
+      }
+
       const records = await recordService.get(type)
+
+      if (browser) {
+        console.log('Atualizando cache')
+        sessionStorage.setItem(cacheKey, JSON.stringify(records))
+      }
+
       return records
     } catch (error) {
       console.error(error)

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Dashboard from '$lib/components/modules/Dashboard.svelte'
+  import { browser } from '$app/environment'
   import { Button } from '$lib/components/ui'
   import { dashboardController } from '$lib/controllers/dashboard.controller'
   import { recordController } from '$lib/controllers/record.controller'
@@ -17,13 +17,27 @@
   async function handleRegister(userId: string, type: 'zerado' | 'backlog') {
     let completedAdjustment = 0
     let backlogAdjustment = 0
+    const isUpdating = Boolean(record)
 
-    if (record) {
+    if (isUpdating && record) {
       record = await recordController.updateRecord(record.$id, type)
-      type === 'zerado' ? backlogAdjustment-- : completedAdjustment--
+
+      if (type === 'zerado') {
+        backlogAdjustment--
+        completedAdjustment++
+        await updateCache('backlog', record.$id)
+        await updateCache('zerado', record, true)
+      } else {
+        completedAdjustment--
+        backlogAdjustment++
+        await updateCache('zerado', record.$id)
+        await updateCache('backlog', record, true)
+      }
     } else {
       record = await recordController.registerRecord(gameId, userId, type)
       type === 'zerado' ? completedAdjustment++ : backlogAdjustment++
+
+      await updateCache(type, record, true)
     }
 
     if (dashboard) {
@@ -31,6 +45,43 @@
         completed: dashboard.completedGamesCount + completedAdjustment,
         backlog: dashboard.backlogGamesCount + backlogAdjustment,
       })
+    }
+  }
+
+  async function updateCache(
+    type: 'zerado' | 'backlog',
+    record: RecordZerei | string,
+    add = false
+  ) {
+    const cacheKey = `records-${type}`
+
+    if (browser) {
+      const cachedData = sessionStorage.getItem(cacheKey)
+      let records
+
+      if (cachedData) {
+        records = JSON.parse(cachedData)
+
+        if (add) {
+          if (records.documents.length >= 12) {
+            records.documents.pop()
+          }
+          records.documents.unshift(record)
+          records.total += 1
+        } else {
+          records.documents = records.documents.filter(
+            (doc: RecordZerei) => doc.$id !== record
+          )
+          records.total = Math.max(0, records.total - 1)
+        }
+      } else if (add) {
+        records = {
+          total: 1,
+          documents: [record],
+        }
+      }
+
+      sessionStorage.setItem(cacheKey, JSON.stringify(records))
     }
   }
 
