@@ -1,6 +1,7 @@
 import { browser } from '$app/environment'
 import { addToast } from '$lib/components/ui/Toast.svelte'
 import { recordService } from '$lib/services/record.service'
+import type { Models } from 'appwrite'
 
 export const recordController = {
   getUniqueRecord: async (gameId: string) => {
@@ -12,7 +13,9 @@ export const recordController = {
       throw error
     }
   },
-  getRecords: async (type?: 'zerado' | 'backlog') => {
+  getRecords: async (
+    type?: 'zerado' | 'backlog'
+  ): Promise<Models.DocumentList<RecordZerei>> => {
     try {
       const cacheKey = `records-${type}`
 
@@ -47,7 +50,7 @@ export const recordController = {
         data: {
           variant: 'success',
           title: 'Jogo registrado',
-          description: 'Que massa, mais um game pra conta.',
+          description: 'Que massa, mais um game pra conta',
         },
       })
 
@@ -65,7 +68,7 @@ export const recordController = {
         data: {
           variant: 'success',
           title: 'Registro atualizado',
-          description: `O jogo está marcado como ${type}.`,
+          description: `O jogo está marcado como ${type}`,
         },
       })
 
