@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
   import { Button } from '$lib/components/ui'
+  import { cacheController } from '$lib/controllers/cache.controller'
   import { dashboardController } from '$lib/controllers/dashboard.controller'
   import { recordController } from '$lib/controllers/record.controller'
   import { Gamepad2, Library } from 'lucide-svelte'
@@ -25,19 +25,19 @@
       if (type === 'zerado') {
         backlogAdjustment--
         completedAdjustment++
-        await updateCache('backlog', record.$id)
-        await updateCache('zerado', record, true)
+        await cacheController.updateRecords('backlog', record.$id)
+        await cacheController.updateRecords('zerado', record, true)
       } else {
         completedAdjustment--
         backlogAdjustment++
-        await updateCache('zerado', record.$id)
-        await updateCache('backlog', record, true)
+        await cacheController.updateRecords('zerado', record.$id)
+        await cacheController.updateRecords('backlog', record, true)
       }
     } else {
       record = await recordController.registerRecord(userId, gameId, type)
       type === 'zerado' ? completedAdjustment++ : backlogAdjustment++
 
-      await updateCache(type, record, true)
+      await cacheController.updateRecords(type, record, true)
     }
 
     if (dashboard) {
@@ -45,43 +45,6 @@
         completed: dashboard.completedGamesCount + completedAdjustment,
         backlog: dashboard.backlogGamesCount + backlogAdjustment,
       })
-    }
-  }
-
-  async function updateCache(
-    type: 'zerado' | 'backlog',
-    record: RecordZerei | string,
-    add = false
-  ) {
-    const cacheKey = `records-${type}`
-
-    if (browser) {
-      const cachedData = localStorage.getItem(cacheKey)
-      let records
-
-      if (cachedData) {
-        records = JSON.parse(cachedData)
-
-        if (add) {
-          if (records.documents.length >= 250) {
-            records.documents.pop()
-          }
-          records.documents.unshift(record)
-          records.total += 1
-        } else {
-          records.documents = records.documents.filter(
-            (doc: RecordZerei) => doc.$id !== record
-          )
-          records.total = Math.max(0, records.total - 1)
-        }
-      } else if (add) {
-        records = {
-          total: 1,
-          documents: [record],
-        }
-      }
-
-      localStorage.setItem(cacheKey, JSON.stringify(records))
     }
   }
 
