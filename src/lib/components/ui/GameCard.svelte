@@ -14,8 +14,6 @@
     closeSheet?: boolean
     className?: string
   } = $props()
-
-  console.log(game)
 </script>
 
 <a
