@@ -28,7 +28,7 @@
 
   <div class="w-full">
     <h6 class="text-sm uppercase text-indigo-dark-12 mt-6">Gêneros</h6>
-    <p>{game.genres}</p>
+    <p>{game.genres || '-'}</p>
   </div>
 
   <div class="w-full">

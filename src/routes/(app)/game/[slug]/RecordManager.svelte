@@ -56,14 +56,14 @@
     const cacheKey = `records-${type}`
 
     if (browser) {
-      const cachedData = sessionStorage.getItem(cacheKey)
+      const cachedData = localStorage.getItem(cacheKey)
       let records
 
       if (cachedData) {
         records = JSON.parse(cachedData)
 
         if (add) {
-          if (records.documents.length >= 12) {
+          if (records.documents.length >= 250) {
             records.documents.pop()
           }
           records.documents.unshift(record)
@@ -81,13 +81,16 @@
         }
       }
 
-      sessionStorage.setItem(cacheKey, JSON.stringify(records))
+      localStorage.setItem(cacheKey, JSON.stringify(records))
     }
   }
 
   onMount(async () => {
     if (account) {
-      const records = await recordController.getUniqueRecord(gameId)
+      const records = await recordController.getUniqueRecord(
+        account.$id,
+        gameId
+      )
       record = records.total > 0 ? records.documents[0] : undefined
     }
   })

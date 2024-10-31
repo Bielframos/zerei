@@ -9,7 +9,7 @@ export const dashboardService = {
       'DASHBOARDS',
       `DSH-${userId}`,
       { completedGamesCount: 0, backlogGamesCount: 0 },
-      [Permission.read(Role.user(userId)), Permission.update(Role.user(userId))]
+      [Permission.update(Role.user(userId))]
     )
   },
   get: async (userId: string) => {
