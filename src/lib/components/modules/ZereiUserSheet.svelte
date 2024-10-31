@@ -75,7 +75,7 @@
           <Loading />
         {:else}
           {#each searchedGames as game}
-            <GameCard {game} />
+            <GameCard {game} closeSheet recordTag />
           {:else}
             <p class="col-span-2 text-slate-dark-11">Nenhum jogo encontrado</p>
           {/each}
@@ -86,7 +86,7 @@
         class="flex-1 grid grid-cols-3 gap-2 auto-rows-min px-6 overflow-y-auto pb-10"
       >
         {#each recentlyAdded.documents as game}
-          <GameCard {game} />
+          <GameCard {game} closeSheet recordTag />
         {/each}
       </div>
     {/if}

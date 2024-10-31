@@ -41,7 +41,10 @@
         class="flex-1 grid grid-cols-3 gap-2 px-6 overflow-y-auto mt-6 pb-10"
       >
         {#each data.documents as record}
-          <GameCard game={record.game} />
+          <GameCard
+            game={record.game}
+            className="border border-indigo-dark-6 rounded-md"
+          />
         {/each}
       </div>
     {/if}
