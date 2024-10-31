@@ -41,6 +41,7 @@ declare global {
   declare type RecordType = 'zerado' | 'backlog'
 
   declare interface RecordZerei extends Models.Document {
+    userId: string
     type: RecordType
     game: GameZerei
   }
@@ -56,7 +57,7 @@ declare global {
     slug: string
     summary: string
     cover?: { id: number; image_id: string }
-    genres: { id: number; appwriteGenreId: string }[]
+    genres?: { id: number; appwriteGenreId: string }[]
     platforms: { id: number; name: string; slug: string }[]
     involved_companies: {
       id: number
