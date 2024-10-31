@@ -4,20 +4,16 @@
   import Loading from '$lib/components/modules/Loading.svelte'
   import GameCard from '$lib/components/ui/GameCard.svelte'
   import { recordController } from '$lib/controllers/record.controller'
-  import { ZereiSummaryGame } from '$lib/models/summaryGame.model'
 
   const { data } = $props()
   const account = $derived(data.account)
   const dashboard = $derived(data.dashboard)
   let filter = $state<RecordType>('zerado')
-  const records = $derived(
-    recordController.getRecords(account?.$id || '', filter)
-  )
+  const records = $derived(recordController.getRecords(filter))
 </script>
 
 <main>
   <Header {account} bind:recordsFilter={filter} />
-
   <Dashboard {dashboard} />
 
   {#await records}
@@ -44,9 +40,8 @@
       <div
         class="flex-1 grid grid-cols-3 gap-2 px-6 overflow-y-auto mt-6 pb-10"
       >
-        {#each data.documents as register}
-          {@const game = new ZereiSummaryGame(register.game)}
-          <GameCard {game} />
+        {#each data.documents as record}
+          <GameCard game={record.game} />
         {/each}
       </div>
     {/if}

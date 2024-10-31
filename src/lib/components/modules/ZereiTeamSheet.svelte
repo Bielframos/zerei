@@ -10,12 +10,12 @@
 </script>
 
 <script lang="ts">
-  import { Button, GameCard, Input, Overlay } from '$lib/components/ui'
+  import { Button, Input, Overlay } from '$lib/components/ui'
   import { IGDBController } from '$lib/controllers/igdb.controller'
-  import { IGDBSummaryGame } from '$lib/models/summaryGame.model'
   import { X } from 'lucide-svelte'
   import { onMount } from 'svelte'
-  import { fade, slide } from 'svelte/transition'
+  import { slide } from 'svelte/transition'
+  import GameCardZerei from '../ui/GameCardZerei.svelte'
   import Loading from './Loading.svelte'
 
   let query = $state('')
@@ -74,9 +74,8 @@
         {#if loading}
           <Loading />
         {:else}
-          {#each searchedGames as searchedGame}
-            {@const game = new IGDBSummaryGame(searchedGame)}
-            <GameCard {game} zerei />
+          {#each searchedGames as game}
+            <GameCardZerei {game} />
           {:else}
             <p class="col-span-2 text-slate-dark-11">Nenhum jogo encontrado</p>
           {/each}
@@ -84,10 +83,8 @@
       </div>
     {:else}
       <div class="flex-1 grid grid-cols-2 gap-2 px-6 overflow-y-auto pb-10">
-        {#each mostPopularGames as popularGameFromIGDB}
-          {@const popularGame = new IGDBSummaryGame(popularGameFromIGDB)}
-
-          <GameCard game={popularGame} zerei />
+        {#each mostPopularGames as game}
+          <GameCardZerei {game} />
         {/each}
       </div>
     {/if}

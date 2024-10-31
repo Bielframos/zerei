@@ -14,7 +14,6 @@
 
   import { Button, GameCard, Input, Overlay } from '$lib/components/ui'
   import { GameController } from '$lib/controllers/game.controller'
-  import { ZereiSummaryGame } from '$lib/models/summaryGame.model'
   import type { Models } from 'appwrite'
   import { X } from 'lucide-svelte'
   import { slide } from 'svelte/transition'
@@ -75,8 +74,7 @@
         {#if loading}
           <Loading />
         {:else}
-          {#each searchedGames as searchedGame}
-            {@const game = new ZereiSummaryGame(searchedGame)}
+          {#each searchedGames as game}
             <GameCard {game} />
           {:else}
             <p class="col-span-2 text-slate-dark-11">Nenhum jogo encontrado</p>
@@ -87,9 +85,8 @@
       <div
         class="flex-1 grid grid-cols-3 gap-2 auto-rows-min px-6 overflow-y-auto pb-10"
       >
-        {#each recentlyAdded.documents as zereiGame}
-          {@const game = new ZereiSummaryGame(zereiGame)}
-          <GameCard {game} onclick={() => zereiUserSheetTrigger()} />
+        {#each recentlyAdded.documents as game}
+          <GameCard {game} />
         {/each}
       </div>
     {/if}

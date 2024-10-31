@@ -1,89 +1,40 @@
 <script lang="ts">
-  import { Button } from '$lib/components/ui'
-  import { GameController } from '$lib/controllers/game.controller'
-  import { IGDBController } from '$lib/controllers/igdb.controller'
-  import type {
-    IGDBSummaryGame,
-    ZereiSummaryGame,
-  } from '$lib/models/summaryGame.model'
-  import { Plus } from 'lucide-svelte'
-  import { addToast } from './Toast.svelte'
+  import cn from '$lib/utils/cn'
+  import { Gamepad2, Library } from 'lucide-svelte'
+  import { zereiUserSheetTrigger } from '../modules/ZereiUserSheet.svelte'
 
   const {
     game,
-    zerei,
-    onclick,
-  }: {
-    game: IGDBSummaryGame | ZereiSummaryGame
-    zerei?: boolean
-    onclick?: () => void
-  } = $props()
-
-  async function addToZerei(game: IGDBSummaryGame | ZereiSummaryGame) {
-    const iWantToAdd = confirm(
-      'Deseja adicionar o jogo a base de dados do Zerei?'
-    )
-
-    if (iWantToAdd) {
-      try {
-        const checkIfExist = await GameController.getUniqueGame(
-          'externalReference',
-          game.id
-        )
-
-        if (checkIfExist) {
-          return addToast({
-            data: {
-              variant: 'notification',
-              title: 'Jogo já registrado',
-              description: 'Este jogo já existe na base do Zerei.',
-            },
-          })
-        }
-
-        const completeGameData = await IGDBController.getUniqueGame(game.id)
-        await GameController.createGame(completeGameData)
-
-        addToast({
-          data: {
-            variant: 'success',
-            title: 'Jogo adicionado',
-            description: 'O jogo foi registrado com sucesso.',
-          },
-        })
-      } catch (error) {
-        console.error(error)
-        throw error
-      }
-    }
-  }
+    recordTag,
+    closeSheet,
+  }: { game: GameZerei; recordTag?: boolean; closeSheet?: boolean } = $props()
 </script>
 
-{#if zerei}
-  <article class="relative flex flex-col items-center">
-    <img
-      src={game.coverImageUrl}
-      alt={`Capa do jogo: ${game.name}`}
-      class="rounded-md"
-    />
-
-    <Button
-      ariaLabel="Adicionar jogo no Zerei"
-      size="icon"
-      className="absolute top-2 right-2"
-      onclick={() => addToZerei(game)}><Plus /></Button
+<a
+  href={`/game/${game.slug}`}
+  class="relative flex flex-col items-center"
+  onclick={() => (closeSheet ? zereiUserSheetTrigger() : () => {})}
+>
+  <img
+    src={game.coverImage}
+    alt={`Capa do jogo: ${game.name}`}
+    class="rounded-md"
+  />
+  {#if recordTag && game.records.length < 0}
+    {@const record = game.records[0]}
+    <div
+      class={cn(
+        'h-4 w-4 rounded-full text-white',
+        record.type === 'zerado' && 'bg-indigo-dark-9',
+        record.type === 'backlog' && 'bg-grass-dark-9'
+      )}
     >
-  </article>
-{:else}
-  <a
-    href={`/game/${game.slug}`}
-    class="relative flex flex-col items-center"
-    {onclick}
-  >
-    <img
-      src={game.coverImageUrl}
-      alt={`Capa do jogo: ${game.name}`}
-      class="rounded-md"
-    />
-  </a>
-{/if}
+      {#if record.type === 'zerado'}
+        <Gamepad2 />
+      {/if}
+      {#if record.type === 'backlog'}
+        <Library />
+      {/if}
+    </div>
+  {/if}
+</a>
