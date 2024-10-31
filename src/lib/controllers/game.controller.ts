@@ -1,13 +1,39 @@
 import { invalidate } from '$app/navigation'
+import { addToast } from '$lib/components/ui/Toast.svelte'
 import { gamesService } from '$lib/services/game.service'
 
 export const GameController = {
   createGame: async (game: GameFromIGDB) => {
     try {
+      addToast({
+        data: {
+          variant: 'notification',
+          title: 'O jogo estã sendo adicionado',
+          description: 'Avisaremos quando terminarmos',
+        },
+      })
+
       const createdGame = await gamesService.create(game)
       invalidate('data:zerei')
+
+      addToast({
+        data: {
+          variant: 'success',
+          title: 'Jogo adicionado',
+          description: 'O jogo foi registrado com sucesso',
+        },
+      })
+
       return createdGame
     } catch (error) {
+      addToast({
+        data: {
+          variant: 'danger',
+          title: 'Erro ao adicionar jogo',
+          description: 'Houve um erro ao adicionar o jogo',
+        },
+      })
+
       console.error('Error creating game:', error)
       throw error
     }
