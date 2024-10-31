@@ -16,6 +16,7 @@
   import { X } from 'lucide-svelte'
   import { onMount } from 'svelte'
   import { fade, slide } from 'svelte/transition'
+  import Loading from './Loading.svelte'
 
   let query = $state('')
   let loading = $state(false)
@@ -50,7 +51,7 @@
   <Overlay onclick={() => zereiTeamSheetTrigger()} />
   <div
     aria-label="sheet"
-    class="flex flex-col absolute z-50 h-[calc(100dvh-92px)] w-full bottom-0 bg-gradient-to-b from-slate-dark-3/80 to-slate-dark-4/80 backdrop-blur-lg rounded-t-2xl shadow-lg shadow-slate-dark-1 overflow-hidden"
+    class="flex flex-col absolute z-50 h-[calc(100dvh-92px)] w-full bottom-0 bg-gradient-to-b from-slate-dark-3 to-slate-dark-4/90 backdrop-blur-lg rounded-t-2xl shadow-lg shadow-slate-dark-1 overflow-hidden"
     in:slide={{ axis: 'y' }}
     out:slide={{ axis: 'y' }}
   >
@@ -71,7 +72,7 @@
       <h2 class="px-6 text-lg font-normal mb-4">Resultados para "{query}"</h2>
       <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
         {#if loading}
-          <p class="col-span-2 text-slate-dark-11">Buscando ...</p>
+          <Loading />
         {:else}
           {#each searchedGames as searchedGame}
             {@const game = new IGDBSummaryGame(searchedGame)}
@@ -82,7 +83,7 @@
         {/if}
       </div>
     {:else}
-      <div class="flex-1 grid grid-cols-2 gap-6 px-6 overflow-y-auto pb-10">
+      <div class="flex-1 grid grid-cols-2 gap-2 px-6 overflow-y-auto pb-10">
         {#each mostPopularGames as popularGameFromIGDB}
           {@const popularGame = new IGDBSummaryGame(popularGameFromIGDB)}
 

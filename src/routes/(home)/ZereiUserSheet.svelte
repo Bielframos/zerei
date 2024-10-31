@@ -10,12 +10,14 @@
 </script>
 
 <script lang="ts">
+  import Loading from '$lib/components/modules/Loading.svelte'
+
   import { Button, GameCard, Input, Overlay } from '$lib/components/ui'
   import { GameController } from '$lib/controllers/game.controller'
   import { ZereiSummaryGame } from '$lib/models/summaryGame.model'
   import type { Models } from 'appwrite'
   import { X } from 'lucide-svelte'
-  import { fade, slide } from 'svelte/transition'
+  import { slide } from 'svelte/transition'
 
   const {
     recentlyAdded,
@@ -48,7 +50,7 @@
   <Overlay onclick={() => zereiUserSheetTrigger()} />
   <div
     aria-label="sheet"
-    class="flex flex-col absolute z-50 h-[calc(100dvh-92px)] w-full bottom-0 bg-gradient-to-b from-slate-dark-3/80 to-slate-dark-4/80 backdrop-blur-lg rounded-t-2xl shadow-lg shadow-slate-dark-1 overflow-hidden"
+    class="flex flex-col absolute z-50 h-[calc(100dvh-92px)] w-full bottom-0 bg-gradient-to-b from-slate-dark-3 to-slate-dark-4/90 backdrop-blur-lg rounded-t-2xl shadow-lg shadow-slate-dark-1 overflow-hidden"
     in:slide={{ axis: 'y' }}
     out:slide={{ axis: 'y' }}
   >
@@ -71,7 +73,7 @@
         class="flex-1 grid grid-cols-3 gap-2 auto-rows-min px-6 overflow-y-auto pb-10"
       >
         {#if loading}
-          <p class="col-span-2 text-slate-dark-11">Buscando ...</p>
+          <Loading />
         {:else}
           {#each searchedGames as searchedGame}
             {@const game = new ZereiSummaryGame(searchedGame)}
@@ -87,7 +89,7 @@
       >
         {#each recentlyAdded.documents as zereiGame}
           {@const game = new ZereiSummaryGame(zereiGame)}
-          <GameCard {game} />
+          <GameCard {game} onclick={() => zereiUserSheetTrigger()} />
         {/each}
       </div>
     {/if}
