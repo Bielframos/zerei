@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { ArrowLeft } from 'lucide-svelte'
+  import { ArrowLeft, Search } from 'lucide-svelte'
   import { Button } from '../ui'
   import Menu from './Menu.svelte'
   import cn from '$lib/utils/cn'
   import { buttonStyle } from '../ui/Button.svelte'
+  import { zereiUserSheetTrigger } from '../../../routes/(home)/ZereiUserSheet.svelte'
 
   let {
     account,
@@ -30,7 +31,16 @@
   </div>
 
   {#if account}
-    <Menu {account} bind:recordsFilter />
+    <div class="flex gap-2">
+      <Button
+        ariaLabel="Botão de busca"
+        variant="secondary"
+        size="icon"
+        onclick={() => zereiUserSheetTrigger()}
+        ><Search />
+      </Button>
+      <Menu {account} bind:recordsFilter />
+    </div>
   {:else}
     <div class="flex gap-2 items-center">
       <a
