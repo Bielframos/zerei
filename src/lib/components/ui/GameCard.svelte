@@ -12,7 +12,12 @@
   const {
     game,
     zerei,
-  }: { game: IGDBSummaryGame | ZereiSummaryGame; zerei?: boolean } = $props()
+    onclick,
+  }: {
+    game: IGDBSummaryGame | ZereiSummaryGame
+    zerei?: boolean
+    onclick?: () => void
+  } = $props()
 
   async function addToZerei(game: IGDBSummaryGame | ZereiSummaryGame) {
     const iWantToAdd = confirm(
@@ -61,8 +66,6 @@
       alt={`Capa do jogo: ${game.name}`}
       class="rounded-md"
     />
-    <h6 class="text-center mt-2 text-sm">{game.name}</h6>
-    <span class="text-xs text-slate-dark-11">{game.launchYear}</span>
 
     <Button
       ariaLabel="Adicionar jogo no Zerei"
@@ -72,7 +75,11 @@
     >
   </article>
 {:else}
-  <a href={`/game/${game.slug}`} class="relative flex flex-col items-center">
+  <a
+    href={`/game/${game.slug}`}
+    class="relative flex flex-col items-center"
+    {onclick}
+  >
     <img
       src={game.coverImageUrl}
       alt={`Capa do jogo: ${game.name}`}
