@@ -3,16 +3,16 @@ import { addToast } from '$lib/components/ui/Toast.svelte'
 import { recordService } from '$lib/services/record.service'
 
 export const recordController = {
-  getUniqueRecord: async (userId: string, gameId: string) => {
+  getUniqueRecord: async (gameId: string) => {
     try {
-      const records = await recordService.getUnique(userId, gameId)
+      const records = await recordService.getUnique(gameId)
       return records
     } catch (error) {
       console.error(error)
       throw error
     }
   },
-  getRecords: async (userId: string, type?: 'zerado' | 'backlog') => {
+  getRecords: async (type?: 'zerado' | 'backlog') => {
     try {
       const cacheKey = `records-${type}`
 
@@ -23,10 +23,9 @@ export const recordController = {
         }
       }
 
-      const records = await recordService.get(userId, type)
+      const records = await recordService.get(type)
 
       if (browser) {
-        console.log('Atualizando cache')
         localStorage.setItem(cacheKey, JSON.stringify(records))
       }
 

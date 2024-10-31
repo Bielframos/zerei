@@ -87,10 +87,7 @@
 
   onMount(async () => {
     if (account) {
-      const records = await recordController.getUniqueRecord(
-        account.$id,
-        gameId
-      )
+      const records = await recordController.getUniqueRecord(gameId)
       record = records.total > 0 ? records.documents[0] : undefined
     }
   })
