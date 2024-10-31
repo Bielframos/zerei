@@ -27,8 +27,8 @@ export const recordService = {
     )
   },
   register: async (
-    gameId: string,
     userId: string,
+    gameId: string,
     type: 'zerado' | 'backlog'
   ) => {
     return appwrite.databases.createDocument<RecordZerei>(

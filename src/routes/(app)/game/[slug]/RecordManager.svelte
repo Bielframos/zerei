@@ -34,7 +34,7 @@
         await updateCache('backlog', record, true)
       }
     } else {
-      record = await recordController.registerRecord(gameId, userId, type)
+      record = await recordController.registerRecord(userId, gameId, type)
       type === 'zerado' ? completedAdjustment++ : backlogAdjustment++
 
       await updateCache(type, record, true)

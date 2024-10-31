@@ -37,12 +37,12 @@ export const recordController = {
     }
   },
   registerRecord: async (
-    gameId: string,
     userId: string,
+    gameId: string,
     type: 'zerado' | 'backlog'
   ) => {
     try {
-      const record = await recordService.register(gameId, userId, type)
+      const record = await recordService.register(userId, gameId, type)
 
       addToast({
         data: {
