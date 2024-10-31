@@ -5,6 +5,7 @@
 
   const { data } = $props()
   const account = $derived(data.account)
+  const dashboard = $derived(data.dashboard)
   const game = new GameModel(data.game)
 </script>
 
@@ -20,10 +21,10 @@
   <span class="text-slate-dark-11">{game.launchYear}</span>
 
   <hr class="border-2 border-indigo-dark-6 w-full my-6 rounded-full" />
-  <RecordManager {account} gameId={game.id} />
+  <RecordManager {account} gameId={game.id} {dashboard} />
   <hr class="border-2 border-indigo-dark-6 w-full my-6 rounded-full" />
 
-  <p>{game.description}</p>
+  <p>{@html game.description.replaceAll('\n', '<br>')}</p>
 
   <div class="w-full">
     <h6 class="text-sm uppercase text-indigo-dark-12 mt-6">Gêneros</h6>
@@ -52,3 +53,9 @@
     <p>{game.localeReleaseDate}</p>
   </div>
 </article>
+
+<style lang="postcss">
+  br {
+    height: 10px;
+  }
+</style>

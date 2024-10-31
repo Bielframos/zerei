@@ -11,9 +11,9 @@ export const recordController = {
       throw error
     }
   },
-  getRecords: async () => {
+  getRecords: async (type?: 'zerado' | 'backlog') => {
     try {
-      const records = await recordService.get()
+      const records = await recordService.get(type)
       return records
     } catch (error) {
       console.error(error)

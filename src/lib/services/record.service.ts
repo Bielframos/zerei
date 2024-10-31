@@ -8,7 +8,7 @@ export const recordService = {
       'RECORDS',
       [
         Query.equal('type', type),
-        Query.limit(10),
+        Query.limit(12),
         Query.orderDesc('$createdAt'),
       ]
     )

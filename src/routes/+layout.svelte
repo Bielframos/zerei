@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { onNavigate } from '$app/navigation'
+  import ZereiTeamSheet from '$lib/components/modules/ZereiTeamSheet.svelte'
+  import { Toast } from '$lib/components/ui'
   import '@fontsource-variable/readex-pro'
   import '../app.css'
-  import { Toast } from '$lib/components/ui'
-  import ZereiTeamSheet from '$lib/components/modules/ZereiTeamSheet.svelte'
-  import { onNavigate } from '$app/navigation'
 
   let { data, ...props } = $props()
   let account = $derived(data.account)
